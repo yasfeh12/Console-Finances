@@ -1,4 +1,4 @@
-var finances = [
+let finances = [
   ['Jan-2010', 867884],
   ['Feb-2010', 984655],
   ['Mar-2010', 322013],
@@ -93,3 +93,47 @@ const sum = finances.reduce((accumulator, currentValue) => accumulator + current
 console.log("Total sum: $ " + sum);
 const average = sum / finances.length;
 console.log("Average: " + average);
+
+const changes = [];
+for (let i = 1; i < finances.length; i++) {
+  const change = finances[i][1] - finances[i - 1][1];
+  changes.push(change);
+}
+
+const averageChange = changes.reduce((accumulator, currentValue) => accumulator + currentValue, 0) / changes.length;
+
+console.log("Average change: " + averageChange);
+
+let maxIncrease = 0;
+let maxIncreaseMonth = '';
+
+for (let i = 1; i < finances.length; i++) {
+  const currentProfit = finances[i][1];
+  const previousProfit = finances[i - 1][1];
+  const profitDifference = currentProfit - previousProfit;
+
+  if (profitDifference > maxIncrease) {
+    maxIncrease = profitDifference;
+    maxIncreaseMonth = finances[i][0]; // Retrieve the month associated with the maximum increase
+  }
+}
+
+console.log("Greatest increase in profits: $" + maxIncrease);
+console.log("Month with the greatest increase: " + maxIncreaseMonth);
+
+let maxDecrease = 0;
+let maxDecreaseMonth = '';
+
+for (let i = 1; i < finances.length; i++) {
+  const currentProfit = finances[i][1];
+  const previousProfit = finances[i - 1][1];
+  const profitDifference = currentProfit - previousProfit;
+
+  if (profitDifference < maxDecrease) {
+    maxDecrease = profitDifference;
+    maxDecreaseMonth = finances[i][0]; // Retrieve the month associated with the maximum decrease
+  }
+}
+
+console.log("Greatest decrease in profits/losses: $" + maxDecrease);
+console.log("Month with the greatest decrease: " + maxDecreaseMonth);
